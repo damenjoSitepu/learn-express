@@ -1,3 +1,4 @@
 export const ROUTE_URL = {
-    ROOT: "/"
+    ROOT: "/",
+    FAKE_API: "/api/employee"
 };
