@@ -117,9 +117,11 @@ finalApp.post(/damenjo/, (req: Request, res: Response) => {
     });
 });
 
-// Next request with route parameter
-finalApp.post(ROUTE_URL.REAL_CHART_OF_ACCOUNT_WITH_ID, [forbiddenCoaMiddleware], (req: Request, res: Response) => {
-    console.log(req.params.myName);
+// Next request with route parameter also with currying middleware technique
+finalApp.use(forbiddenCoaMiddleware({ age: 20 }));
+finalApp.post(ROUTE_URL.REAL_CHART_OF_ACCOUNT_WITH_ID, (req: Request, res: Response) => {
+    // @ts-ignore
+    console.log(req.myInfo);
     const chartOfAccounts: ChartOfAccount[] = CHART_OF_ACCOUNTS ?? [];
     if (chartOfAccounts.length === 0) {
         return res.json({
