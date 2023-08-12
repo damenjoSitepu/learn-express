@@ -1,10 +1,11 @@
 import express from "express";
 import { CONFIG } from "./config";
+import { ROUTE_URL } from "./route-url";
 
 const finalApp = express();
 
 // First request on the root 
-finalApp.get("/", (req, res) => {
+finalApp.get(ROUTE_URL.ROOT, (req, res) => {
     return res.send("Root route!");
 });
 
