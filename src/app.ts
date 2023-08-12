@@ -39,6 +39,11 @@ finalApp.post(ROUTE_URL.REAL_CHART_OF_ACCOUNTS, (req: Request, res: Response) =>
     });
 });
 
+// Next request with redirect returned
+finalApp.post(ROUTE_URL.REAL_REDIRECT_TO_GOOGLE, (req: Request, res: Response) => {
+    return res.redirect("https://google.co.uk");
+});
+
 finalApp.listen(CONFIG.PORT, () => {
     console.log("Final app has been released!");
 });
