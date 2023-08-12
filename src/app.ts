@@ -96,6 +96,24 @@ finalApp.route(ROUTE_URL.REAL_CHART_OF_ACCOUNT)
         })
     }); 
 
+// Next Request with between sign
+finalApp.post("/damenjo*sitepu", (req: Request, res: Response) => {
+    return res.json({
+        error: false,
+        code: 200,
+        message: "Successfully get data with between sign!"
+    });
+});
+
+// Next request with regex
+finalApp.post(/damenjo/, (req: Request, res: Response) => {
+    return res.json({
+        error: false,
+        code: 200,
+        message: "Successfully get data with 'damenjo' regex!"
+    });
+});
+
 finalApp.listen(CONFIG.PORT, () => {
     console.log("Final app has been released!");
 });
