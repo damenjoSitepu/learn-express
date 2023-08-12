@@ -1,6 +1,6 @@
-import { ChartOfAccounts } from "./chart-of-accounts.interface";
+import { ChartOfAccount } from "./chart-of-accounts.interface";
 
-export const CHART_OF_ACCOUNTS: ChartOfAccounts[] = [
+export const CHART_OF_ACCOUNTS: ChartOfAccount[] = [
     {
         id: 1,
         name: "Wi-Fi Expense",
