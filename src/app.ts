@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import { CONFIG } from "./config";
 import { ROUTE_URL } from "./route-url";
 import { RESPONSE_MESSAGE } from "./response-message";
+import { CHART_OF_ACCOUNTS } from "./data/chart-of-accounts/chart-of-accounts";
+import { ChartOfAccount } from "./data/chart-of-accounts/chart-of-accounts.interface";
 
 const finalApp = express();
 
@@ -111,6 +113,35 @@ finalApp.post(/damenjo/, (req: Request, res: Response) => {
         error: false,
         code: 200,
         message: "Successfully get data with 'damenjo' regex!"
+    });
+});
+
+// Next request with route parameter
+
+finalApp.post(ROUTE_URL.REAL_CHART_OF_ACCOUNT_WITH_ID, (req: Request, res: Response) => {
+    const chartOfAccounts: ChartOfAccount[] = CHART_OF_ACCOUNTS ?? [];
+    if (chartOfAccounts.length === 0) {
+        return res.json({
+            error: true,
+            code: 404,
+            message: RESPONSE_MESSAGE.CHART_OF_ACCOUNT_ARE_EMPTY
+        });
+    }
+    const chartOfAccount = chartOfAccounts.find((chartOfAccount: ChartOfAccount) => chartOfAccount.id === parseInt(req.params.id ?? 0));
+    if (chartOfAccount === undefined) {
+        return res.json({
+            error: true,
+            code: 404,
+            message: RESPONSE_MESSAGE.CHART_OF_ACCOUNT_NOT_FOUND
+        });
+    }
+    return res.json({
+        error: false,
+        code: 200,
+        message: RESPONSE_MESSAGE.SUCCESS_GET_CHART_OF_ACCOUNT,
+        data: {
+            chartOfAccount: chartOfAccount
+        }
     });
 });
 
