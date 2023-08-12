@@ -9,5 +9,6 @@ export const forbiddenCoaMiddleware = (req: Request, res: Response, next: NextFu
             message: RESPONSE_MESSAGE.UNAUTHORIZED_CHART_OF_ACCOUNT
         });
     }
+    req.params.myName = "Damenjo Sitepu";
     next();
 };
