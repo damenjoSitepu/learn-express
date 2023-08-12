@@ -17,6 +17,12 @@ finalApp.post(ROUTE_URL.FAKE_API, (req, res) => {
     return res.sendStatus(200);
 });
 
+// Third request for fake api data but using all() method
+finalApp.all(ROUTE_URL.FAKE_ALL_API, (req, res) => {
+    console.log(req.body);
+    return res.sendStatus(200);
+});
+
 finalApp.listen(CONFIG.PORT, () => {
     console.log("Final app has been released!");
 });
