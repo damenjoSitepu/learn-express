@@ -6,4 +6,5 @@ export const ROUTE_URL = {
     REAL_REDIRECT_TO_GOOGLE: "/api/redirect/google",
     REAL_CHART_OF_ACCOUNT: "/api/chart-of-account",
     REAL_CHART_OF_ACCOUNT_WITH_ID: "/api/chart-of-account/:id",
+    REAL_ERROR: "/api/error"
 };

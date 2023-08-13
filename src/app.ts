@@ -147,6 +147,19 @@ finalApp.post(ROUTE_URL.REAL_CHART_OF_ACCOUNT_WITH_ID,[forbiddenCoaMiddleware({ 
     });
 });
 
+// Next request with error handling
+finalApp.get(ROUTE_URL.REAL_ERROR, (req: Request, res: Response) => {
+    try {
+        throw new Error(RESPONSE_MESSAGE.SOMETHING_BAD_HAPPENED);
+    } catch (e) {
+        return res.json({
+            error: true,
+            code: 500,
+            message: ((e instanceof Error) && e.message) ?? RESPONSE_MESSAGE.SOMETHING_WENT_WRONG
+        });
+    }
+});
+
 finalApp.listen(CONFIG.PORT, () => {
     console.log("Final app has been released!");
 });
