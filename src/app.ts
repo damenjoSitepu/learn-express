@@ -1,9 +1,10 @@
+import { ParamsDictionary } from './../node_modules/@types/express-serve-static-core/index.d';
 import express, { Request, Response } from "express";
 import { CONFIG } from "./config";
 import { ROUTE_URL } from "./route-url";
 import { RESPONSE_MESSAGE } from "./response-message";
 import { CHART_OF_ACCOUNTS } from "./data/chart-of-accounts/chart-of-accounts";
-import { ChartOfAccount } from "./data/chart-of-accounts/chart-of-accounts.interface";
+import { ChartOfAccount, ChartOfAccountParamGetRequest } from "./data/chart-of-accounts/chart-of-accounts.interface";
 import { forbiddenCoaMiddleware } from "./middleware/forbidden-coa.middleware";
 
 const finalApp = express();
@@ -118,10 +119,7 @@ finalApp.post(/damenjo/, (req: Request, res: Response) => {
 });
 
 // Next request with route parameter also with currying middleware technique
-finalApp.use(forbiddenCoaMiddleware({ age: 20 }));
-finalApp.post(ROUTE_URL.REAL_CHART_OF_ACCOUNT_WITH_ID, (req: Request, res: Response) => {
-    // @ts-ignore
-    console.log(req.myInfo);
+finalApp.post(ROUTE_URL.REAL_CHART_OF_ACCOUNT_WITH_ID,[forbiddenCoaMiddleware({ age: 20 })], (req: Request<ChartOfAccountParamGetRequest | ParamsDictionary, any, any, any>, res: Response) => {
     const chartOfAccounts: ChartOfAccount[] = CHART_OF_ACCOUNTS ?? [];
     if (chartOfAccounts.length === 0) {
         return res.json({
@@ -130,12 +128,13 @@ finalApp.post(ROUTE_URL.REAL_CHART_OF_ACCOUNT_WITH_ID, (req: Request, res: Respo
             message: RESPONSE_MESSAGE.CHART_OF_ACCOUNT_ARE_EMPTY
         });
     }
-    const chartOfAccount = chartOfAccounts.find((chartOfAccount: ChartOfAccount) => chartOfAccount.id === parseInt(req.params.id ?? 0));
+    
+    const chartOfAccount = chartOfAccounts.find((chartOfAccount: ChartOfAccount) => chartOfAccount.id == req.params.id);
     if (chartOfAccount === undefined) {
         return res.json({
             error: true,
             code: 404,
-            message: RESPONSE_MESSAGE.CHART_OF_ACCOUNT_NOT_FOUND
+            message: RESPONSE_MESSAGE.CHART_OF_ACCOUNT_NOT_FOUND,
         });
     }
     return res.json({

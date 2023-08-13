@@ -3,3 +3,7 @@ export interface ChartOfAccount {
     name: string;
     isActive: boolean;
 };
+
+export interface ChartOfAccountParamGetRequest {
+    id: number 
+};
