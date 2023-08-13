@@ -152,11 +152,12 @@ finalApp.get(ROUTE_URL.REAL_ERROR, (req: Request, res: Response) => {
     try {
         throw new Error(RESPONSE_MESSAGE.SOMETHING_BAD_HAPPENED);
     } catch (e) {
-        return res.json({
-            error: true,
-            code: 500,
-            message: ((e instanceof Error) && e.message) ?? RESPONSE_MESSAGE.SOMETHING_WENT_WRONG
-        });
+        return res.status(400).send(((e instanceof Error) && e.message) ?? RESPONSE_MESSAGE.SOMETHING_WENT_WRONG);
+        // return res.sendStatus(400).json({
+        //     error: true,
+        //     code: 500,
+        //     message: ((e instanceof Error) && e.message) ?? RESPONSE_MESSAGE.SOMETHING_WENT_WRONG
+        // });
     }
 });
 
